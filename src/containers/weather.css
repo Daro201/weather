@@ -1,0 +1,25 @@
+.post-content {
+    background: none repeat scroll 0 0 black;
+    opacity: 0.6;
+    top: 30%;
+    left: 40%;
+    position: absolute;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.image{
+    position:relative;
+    padding-top: 10px;   
+}
+
+
+@media (max-width: 768px) {
+	.post-content{
+		text-align: center;
+		top: 10px;
+    	left: 0;
+    	width: 100%;
+	}
+
+}
