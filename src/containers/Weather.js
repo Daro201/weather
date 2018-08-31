@@ -20,10 +20,12 @@ class Weather extends Component {
         this.state = {
             weatherData: [],
             woeid: '',
+            loader: false,
         };
     }
 
     getWeather(city) {
+        this.setState({ loader: true });
         fetch(`${this.CORS_URL}${this.API_URL}${this.WOEID_API}${city}`)
             .then(resp => resp.json())
             .then(resp => {
@@ -39,13 +41,13 @@ class Weather extends Component {
                                 }
                             );
 
-                            this.setState({ weatherData, latt, long });           
+                            this.setState({ weatherData, latt, long, loader: false });           
                            
                             
                         });
                 } else {
-                   this.setState({ woeid: null }); 
-                }
+                   this.setState({ woeid: null, loader: false }); 
+                }                
             });
     }
 
@@ -57,7 +59,10 @@ class Weather extends Component {
                     <div className="row">
                         <div className="col-xs-12" className="text-center">
                             <WeatherForm submitHandler={this.getWeather.bind(this)} />
-                            {this.state.woeid !== null ? (
+                            {this.state.loader ? (
+                                <video src="https://i.gifer.com/1amw.mp4" loop autoPlay />
+                            ) : null }
+                            {!this.state.loader && this.state.woeid !== null ? (
                                 <div>
                                     <div className="col-xs-6">
                                         {this.state.latt !== undefined && 
@@ -70,7 +75,8 @@ class Weather extends Component {
                                         }
                                     </div>
                                 </div> 
-                            ) : (
+                            ) : null}
+                            {!this.state.loader && this.state.woeid === null ? (
                                 <div className="col-xs-12" className ={styles.wather}>
                                     <div className ="image">  
                                         <img src="https://images.pexels.com/photos/335393/pexels-photo-335393.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt="globe"/>
@@ -79,7 +85,7 @@ class Weather extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            )}
+                            ) : null}
                         </div>
                     </div>
                 </div>
